@@ -11,7 +11,7 @@ const data = [
 
 ];
 
-const OrderMMIng = () => {
+const OrderMMDone = () => {
 
     const styles = {
         //width: 960,
@@ -112,5 +112,5 @@ const OrderMMIng = () => {
         );
 };
 
-export default OrderMMIng;
+export default OrderMMDone;
 

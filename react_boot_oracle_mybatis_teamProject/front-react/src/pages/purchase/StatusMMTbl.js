@@ -4,7 +4,7 @@ import React from 'react';
 
 const { Column, HeaderCell, Cell } = Table;
 const data = [
-    { id: 1, date: "2025-03-20", CustomerName: "풀무원", ItemName: "콩나물", TotalAmount: "1,000,000", TransactionType: "부가세율 적용", WarehouseName: "파주물류창고", account: "X", print: "인쇄", chit: "조회" },
+    { id: 1, date: "2025-03-20", CustomerName: "풀무원", ItemName: "콩나물", quantity: 100, TotalAmount: "100,000", TransactionType: "부가세율 적용", WarehouseName: "파주물류창고", account: "X", print: "인쇄", chit: "조회" },
 ];
 
 const StatusMMTbl = () => {
@@ -13,7 +13,7 @@ const StatusMMTbl = () => {
         //width: 960,
         //marginBottom: 10,
         backgroundColor: '#f8f9fa',
-    };
+    }; 
 
     return (
         <Table
@@ -42,7 +42,7 @@ const StatusMMTbl = () => {
 
             <Column width={160}>
                 <HeaderCell style={styles}>수량</HeaderCell>
-                <Cell dataKey="TotalAmount" />
+                <Cell dataKey="quantity" />
             </Column>
 
             <Column width={160}>
@@ -51,8 +51,8 @@ const StatusMMTbl = () => {
             </Column>
 
             <Column width={160}>
-                <HeaderCell style={styles}>금액</HeaderCell>
-                <Cell dataKey="WarehouseName" />
+                <HeaderCell style={styles}>금액합계</HeaderCell>
+                <Cell dataKey="TotalAmount" />
             </Column>
         </Table>
     );

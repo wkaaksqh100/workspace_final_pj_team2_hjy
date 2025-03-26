@@ -57,7 +57,7 @@ const InsertMMTbl = () => {
       <hr />
       
       <Table height={420} data={data} style={{width: 960}}>
-        <Column width={120}>
+        <Column width={150}>
           <HeaderCell style={column}>품명코드</HeaderCell>
           <EditableCell
             dataKey="id"
@@ -77,17 +77,7 @@ const InsertMMTbl = () => {
           />
         </Column>
 
-        <Column width={100}>
-          <HeaderCell style={column}>규격</HeaderCell>
-          <EditableCell
-            dataKey="age"
-            dataType="number"
-            onChange={handleChange}
-            onEdit={handleEdit}
-          />
-        </Column>
-
-        <Column width={100}>
+        <Column width={130}>
           <HeaderCell style={column}>수량</HeaderCell>
           <EditableCell
             dataKey="age"
@@ -97,7 +87,7 @@ const InsertMMTbl = () => {
           />
         </Column>
 
-        <Column width={120}>
+        <Column width={130}>
           <HeaderCell style={column}>단가</HeaderCell>
           <EditableCell
             dataKey="age"
@@ -107,7 +97,7 @@ const InsertMMTbl = () => {
           />
         </Column>
 
-        <Column width={120}>
+        <Column width={140}>
           <HeaderCell style={column}>공급가액</HeaderCell>
           <EditableCell
             dataKey="age"
@@ -117,7 +107,7 @@ const InsertMMTbl = () => {
           />
         </Column>
 
-        <Column width={120}>
+        <Column width={130}>
           <HeaderCell style={column}>부가세</HeaderCell>
           <EditableCell
             dataKey="age"
