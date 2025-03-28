@@ -5,9 +5,10 @@ import "rsuite/Header/styles/index.css";
 import "rsuite/Content/styles/index.css";
 import "rsuite/Footer/styles/index.css";
 import "rsuite/Sidebar/styles/index.css";
-import 'rsuite/Drawer/styles/index.css';
+import "rsuite/Drawer/styles/index.css";
 
 import React, { useState } from "react";
+import { Link, Route, Routes } from 'react-router-dom';
 import {
 	Container,
 	Header,
@@ -26,10 +27,17 @@ import {
 	Button,
 	Placeholder,
 	Input,
+	ButtonToolbar,
 } from "rsuite";
 
+import AngleLeftIcon from '@rsuite/icons/legacy/AngleLeft';
 import HistoryTaskIcon from "@rsuite/icons/HistoryTask";
+
+import TreemapIcon from "@rsuite/icons/Treemap";
+import PeopleBranchIcon from "@rsuite/icons/PeopleBranch";
+import SiteSettingIcon from "@rsuite/icons/SiteSetting";
 import GearIcon from "@rsuite/icons/Gear";
+
 import ArrowLeftLineIcon from "@rsuite/icons/ArrowLeftLine";
 import ArrowRightLineIcon from "@rsuite/icons/ArrowRightLine";
 import Icon from "@rsuite/icons/esm/Icon";
@@ -37,27 +45,33 @@ import Icon from "@rsuite/icons/esm/Icon";
 import SiteIcon from "@rsuite/icons/Site";
 import PeopleRuleIcon from "@rsuite/icons/PeopleRule";
 import HelpOutlineIcon from "@rsuite/icons/HelpOutline";
-import { Route, Routes } from "react-router-dom";
-import StockStatus from "./purchase/StockStatus";
-import SelectMM from "./purchase/SelectMM";
-import InsertMM from "./purchase/InsertMM";
-import OrderMM from "./purchase/OrderMM";
-import UpdateMM from "./purchase/UpdateMM";
-import StatusMM from "./purchase/StatusMM";
-import PageMM from "./purchase/PageMM";
-import OrderMMInsert from "./purchase/OrderMMInsert";
+import WarehouseMain from "./WarehouseMain";
+import WarehousingList from "../logis/WarehousingList";
+import WarehousingList2 from "../logis/WarehousingList2";
+import WarehousingItemMain from "../logis/WarehousingItemMain";
+import ShippingItemMain from "../logis/ShippingItemMain";
+import DeliveryItemList from "../components/DeliveryItemList";
+//import LogisCrawling from "../logis/LogisCrawling";
+import Detail from "../logis/Detail";
 
 const Home = () => {
-
 	const [open, setOpen] = React.useState(false);
 	const [placement, setPlacement] = React.useState();
+	const [expand, setExpand] = useState(true);
+
+	// 물류 메인 뉴스용
+	const [noticeopen, setNoticeOpen] = React.useState(false);
+	const [noticeplacement, setNoticePlacement] = React.useState();
 
 	const handleOpen = (key) => {
 		setOpen(true);
 		setPlacement(key);
 	};
 
-	const [expand, setExpand] = useState(true);
+	const noticeOpen = (key) => {
+		setNoticeOpen(true);
+		setNoticePlacement(key);
+	};
 
 	return (
 		<Container>
@@ -75,106 +89,44 @@ const Home = () => {
 					appearance="subtle"
 				>
 					<Sidenav.Body>
-						<br/>
 						<Nav defaultActiveKey="1">
-							{/* <Nav.Item
+							<Nav.Item
 								eventKey="1"
 								icon={<Icon as={TreemapIcon} />}
 							>
 								대시보드
-							</Nav.Item> */}
-							{/* <Nav.Item
+							</Nav.Item>
+							<Nav.Item
 								eventKey="2"
 								icon={<Icon as={PeopleBranchIcon} />}
 							>
 								부서연결
-							</Nav.Item> */}
+							</Nav.Item>
 							<Nav.Menu
 								eventKey="3"
 								trigger="hover"
-								title="기초등록"
-								// icon={<Icon as={PeopleBranchIcon} />}
+								title="고급"
+								icon={<Icon as={SiteSettingIcon} />}
 								placement="rightStart"
 							>
-								<Nav.Item eventKey="3-1">기초등록</Nav.Item>
-								
+								<Nav.Item eventKey="3-1">Geo</Nav.Item>
+								<Nav.Item eventKey="3-2">Devices</Nav.Item>
+								<Nav.Item eventKey="3-3">Brand</Nav.Item>
+								<Nav.Item eventKey="3-4">Loyalty</Nav.Item>
+								<Nav.Item eventKey="3-5">Visit Depth</Nav.Item>
 							</Nav.Menu>
 							<Nav.Menu
 								eventKey="4"
-								trigger="hover"
-								title="판매관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								<Nav.Item eventKey="4-1">판매관리</Nav.Item>
-								
-							</Nav.Menu>
-							<Nav.Menu
-								eventKey="5"
-								trigger="hover"
-								title="구매관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								<Nav.Item eventKey="5-1" href="/SelectMM">구매조회</Nav.Item>
-								<Nav.Item eventKey="5-2" href="/InsertMM">구매입력</Nav.Item>
-								<Nav.Item eventKey="5-3" href="/StatusMM">구매현황</Nav.Item>
-								<Nav.Item eventKey="5-4" href="/OrderMM">발주서 관리</Nav.Item>
-								
-							</Nav.Menu>
-							<Nav.Menu
-								eventKey="6"
-								trigger="hover"
-								title="물류관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								<Nav.Item eventKey="6-1">물류관리</Nav.Item>
-							
-							</Nav.Menu>
-							<Nav.Menu
-								eventKey="7"
-								trigger="hover"
-								title="회계관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								<Nav.Item eventKey="7-1">회계관리</Nav.Item>
-						
-							</Nav.Menu>
-							<Nav.Menu
-								eventKey="8"
-								trigger="hover"
-								title="인사관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								<Nav.Item eventKey="8-1">인사관리</Nav.Item>
-				
-							</Nav.Menu>
-							<Nav.Menu
-								eventKey="9"
-								trigger="hover"
-								title="근태관리"
-								//icon={<Icon as={PeopleBranchIcon} />}
-								placement="rightStart"
-							>
-								
-								<Nav.Item eventKey="9-1">근태관리</Nav.Item>
-							</Nav.Menu>
-					
-							<Nav.Menu
-								eventKey="10"
 								trigger="hover"
 								title="설정"
 								icon={<Icon as={GearIcon} />}
 								placement="rightStart"
 							>
-								<Nav.Item eventKey="10-1">로그인</Nav.Item>
-								<Nav.Item eventKey="10-2">로그아웃</Nav.Item>
-								{/* <Nav.Item eventKey="10-3">Channels</Nav.Item>
-								<Nav.Item eventKey="10-4">Tags</Nav.Item>
-								<Nav.Item eventKey="10-5">Versions</Nav.Item> */}
+								<Nav.Item eventKey="4-1">Applications</Nav.Item>
+								<Nav.Item eventKey="4-2">Websites</Nav.Item>
+								<Nav.Item eventKey="4-3">Channels</Nav.Item>
+								<Nav.Item eventKey="4-4">Tags</Nav.Item>
+								<Nav.Item eventKey="4-5">Versions</Nav.Item>
 							</Nav.Menu>
 						</Nav>
 					</Sidenav.Body>
@@ -192,14 +144,6 @@ const Home = () => {
 								Home
 							</Nav.Item>
 							<Nav.Menu
-								title="구매관리"
-							>
-								<Nav.Item href="/SelectMM">구매조회</Nav.Item>
-								<Nav.Item href="/InsertMM">구매입력</Nav.Item>
-								<Nav.Item href="/StatusMM">구매현황</Nav.Item>
-								<Nav.Item href="/OrderMM">발주서 관리</Nav.Item>			
-							</Nav.Menu>
-							<Nav.Menu
 								icon={<Icon as={PeopleRuleIcon} />}
 								title="HR"
 							>
@@ -208,6 +152,23 @@ const Home = () => {
 							</Nav.Menu>
 							<Nav.Item>News</Nav.Item>
 							<Nav.Item>Products</Nav.Item>
+							<Nav.Menu
+								icon={<Icon as={PeopleRuleIcon} />}
+								title="물류"
+							>
+								<Nav.Item className='in_li text_center'>
+									<Link to="/warehouseMain" className='nav-link'>물류메인</Link>
+								</Nav.Item>
+								<Nav.Item className='in_li text_center'>
+									<Link to="/warehouseList" className='nav-link'>입고관리</Link>
+								</Nav.Item>
+								<Nav.Item className='in_li text_center'>
+									<Link to="/orderList" className='nav-link'>출고관리</Link>
+								</Nav.Item>
+								<Nav.Item className='in_li text_center'>
+									<Link to="/warehouseList2" className='nav-link'>창고관리</Link> {/*WarehousingList2*/}
+								</Nav.Item>
+							</Nav.Menu>
 							<Nav.Menu
 								icon={<Icon as={HelpOutlineIcon} />}
 								title="문의"
@@ -233,18 +194,50 @@ const Home = () => {
 				</Header>
 				<Content>
 					<Routes>
-						<Route path="/SelectMM" element={<SelectMM/>} />
-						<Route path="/InsertMM" element={<InsertMM/>} />
-						<Route path="/UpdateMM" element={<UpdateMM/>} />			
-						<Route path="/StatusMM" element={<StatusMM/>} />
-						<Route path="/OrderMM" element={<OrderMM/>} />	
-						<Route path="/StockStatus" element={<StockStatus/>} />	
-						<Route path="/PageMM" element={<PageMM/>} />
-						<Route path="/OrderMMInsert" element={<OrderMMInsert/>} />	
-												
+						<Route path="/" element={
+							<Container>
+								<Text>물류관리에 접속하셨습니다</Text>
+								<div className="flex_wrap_for_main">
+									<div className="warp_for_left">
+										<div className="main_components">
+											<WarehousingItemMain />
+										</div>
+										<div className="main_components">
+											<ShippingItemMain />
+										</div>
+									</div>
+									<ButtonToolbar className="position_right">
+										<IconButton className="right_drawer_btn" icon={<AngleLeftIcon />} onClick={() => noticeOpen('right')}>
+											Right
+										</IconButton>
+									</ButtonToolbar>
+									<Drawer placement={noticeplacement} open={noticeopen} onClose={() => setNoticeOpen(false)}>
+										<Drawer.Header>
+											<Drawer.Title>Drawer Title</Drawer.Title>
+											<Drawer.Actions>
+												<Button onClick={() => setNoticeOpen(false)}>Cancel</Button>
+												<Button onClick={() => setNoticeOpen(false)} appearance="primary">
+													Confirm
+												</Button>
+											</Drawer.Actions>
+										</Drawer.Header>
+										<Drawer.Body>
+											뉴스 크롤링 또는 공지사항 안내
+										</Drawer.Body>
+									</Drawer>
+								</div>
+							</Container>
+						} />
+						<Route path="/" element={<Home />} /> 
+						<Route path="/warehouseMain" element={<WarehouseMain />} /> 
+						<Route path="/warehouseList" element={<WarehousingItemMain />} /> 
+						<Route path="/warehouseList2" element={<WarehousingList2 />} /> 
+						<Route path="/detail/:l_code" element={<Detail />} /> 
+						<Route path="/orderList" element={<ShippingItemMain />} /> 
+						<Route path="/orderItemList" element={<DeliveryItemList />} /> 
+						{/* <Route path="/orderItemList/:p_code" element={<DeliveryItemList />} />  */}
 					</Routes>
 				</Content>
-
 				<Footer></Footer>
 			</Container>
 			<Drawer
@@ -256,12 +249,11 @@ const Home = () => {
 			>
 				<Drawer.Header>
 					<Drawer.Title>Chatbot 상담</Drawer.Title>
-					<Drawer.Actions >
-					</Drawer.Actions>
+					<Drawer.Actions></Drawer.Actions>
 				</Drawer.Header>
 				<Drawer.Body>
 					<Placeholder.Paragraph rows={8} />
-					<Drawer.Actions >
+					<Drawer.Actions>
 						<HStack spacing={32}>
 							<Input placeholder="상담을 시작하세요..."></Input>
 							<Button
@@ -296,7 +288,12 @@ const NavToggle = ({ expand, onChange }) => {
 
 const Brand = ({ expand }) => {
 	return (
-		<HStack style={{ margin: 8 }} className="page-brand" justifyContent={"center"} spacing={12}>
+		<HStack
+			style={{ margin: 8 }}
+			className="page-brand"
+			justifyContent={"center"}
+			spacing={12}
+		>
 			<HistoryTaskIcon width={28} height={28} />
 			{expand && <Text size={24}>ERP닷</Text>}
 		</HStack>
