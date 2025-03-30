@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mapper namespace="com.boot.project.dao.BuyMapper">
+	 <select id="buyList" resultType="com.boot.project.dto.BuyDTO">
+	      select * 
+			from order_tbl
+			join order_detail_tbl 
+			on order_tbl.order_id = order_detail_tbl.order_id
+  	 </select>
+	
+	<!--  <insert id="insertBoard" parameterType="com.boot.reactMapper.dto.BoardDTO">
+	      INSERT INTO mvc_board_tbl(b_num, b_title, b_content, b_writer, b_password)
+ 			VALUES((SELECT NVL(MAX(b_num) + 1, 1)FROM mvc_board_tbl), #{b_title}, #{b_content}, #{b_writer}, #{b_password})   
+  	 </insert>
+
+	 <update id="updateBoard" parameterType="com.boot.reactMapper.dto.BoardDTO">
+	       UPDATE mvc_board_tbl
+			 SET b_title = #{b_title} 
+			   , b_content = #{b_content}
+			   , b_writer = #{b_writer}
+			   , b_password = #{b_password}
+			WHERE b_num = #{b_num} 
+  	 </update>
+
+	 <delete id="deleteBoard" parameterType="int">
+	       DELETE FROM mvc_board_tbl
+ 		    WHERE b_num = #{b_num} 
+  	 </delete>
+  	 
+  	 <select id="findByNum" resultType="com.boot.reactMapper.dto.BoardDTO">
+	      SELECT * FROM mvc_board_tbl
+	        WHERE b_num = #{b_num}    
+  	 </select> -->
+</mapper>   

@@ -3,11 +3,11 @@ import SearchIcon from '@rsuite/icons/Search';
 import Search from "@rsuite/icons/Search";
 import StatusMMTbl from "./StatusMMTbl";
 import './buy.css';
-import SearchPRMList from "./SearchPRMList";
-import SelectEmpList from "./SelectEmpList";
 import React from "react";
-import SearchWHList from "./SearchWHList";
 import { _modalForm } from "../../components/ModalForm";
+import SearchEmployee from "./SearchEmployee";
+import SearchClient from "./SearchClient";
+import SearchStorage from "./SearchStorage";
 
 const type = [
     '부가세율 적용',
@@ -121,7 +121,7 @@ const BuyStatus = () => {
                                 <SearchIcon />
                             </InputGroup.Button>
                         </InputGroup>
-                        <SelectEmpList />
+                        <SearchEmployee />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={handleClose1} appearance="primary">
@@ -145,7 +145,7 @@ const BuyStatus = () => {
                                 <SearchIcon />
                             </InputGroup.Button>
                         </InputGroup>
-                        <SearchPRMList />
+                        <SearchClient />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={handleClose2} appearance="subtle">
@@ -166,7 +166,7 @@ const BuyStatus = () => {
                                 <SearchIcon />
                             </InputGroup.Button>
                         </InputGroup>
-                        <SearchWHList />
+                        <SearchStorage />
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={handleClose3} appearance="primary">

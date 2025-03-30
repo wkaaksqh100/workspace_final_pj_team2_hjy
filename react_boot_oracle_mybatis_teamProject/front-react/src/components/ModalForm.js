@@ -1,20 +1,16 @@
-import React, { forwardRef } from "react";
-import { Button, Form, Input, Modal, SelectPicker } from "rsuite";
+import React from "react";
+import { Button, Form, Modal } from "rsuite";
 
-/* 선택상자 데이터 */
-const selectData = ["Eugenia", "Bryan", "Linda", "Nancy", "Lloyd", "Alice"].map(
-	(item) => ({ // 이렇게 하면, 둘다 같게 들어가서, 라벨따로 값따로 안넣어줘도 됩니다.
-		label: item, // Eugenia
-		value: item, // Eugenia
-	})
-);
-
-const Textarea = forwardRef((props, ref) => (
-	<Input {...props} as="textarea" ref={ref} />
-));
+// /* 선택상자 데이터 */
+// const selectData = ["Eugenia", "Bryan", "Linda", "Nancy", "Lloyd", "Alice"].map(
+// 	(item) => ({ // 이렇게 하면, 둘다 같게 들어가서, 라벨따로 값따로 안넣어줘도 됩니다.
+// 		label: item, // Eugenia
+// 		value: item, // Eugenia
+// 	})
+// );
 
 const _modalForm = { // ModalForm's 이용중인 변수 : 멤버변수처럼 이용중
-	title: null,
+	title: '담당자 검색',
 	show: null, // useState[ state, stateSetter ] = show[0], show[1]
 	buttons: {
 		confirm: null,
@@ -56,13 +52,13 @@ const ModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 
 	const handler = self.getHandle();
 
-	const [ formData, setFormData ] = React.useState({
-		name: "",
-		email: "",
-		password: "",
-		textarea: "",
-	});
-	self.getFormData = () => { return formData };
+	// const [formData, setFormData] = React.useState({
+	// 	name: "",
+	// 	email: "",
+	// 	password: "",
+	// 	textarea: "",
+	// });
+	// self.getFormData = () => { return formData };
 
 	/*
 	 *	Hook영역 : useEffect(이걸 쓰는순간, 직접만든 훅이라고 React에서 말합니다.)
@@ -75,42 +71,7 @@ const ModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form fluid onChange={setFormData} formValue={self.getFormData()}>
-					<Form.Group controlId="name-9">
-						<Form.ControlLabel>Username</Form.ControlLabel>
-						<Form.Control name="name" />
-						<Form.HelpText>Required</Form.HelpText>
-					</Form.Group>
-					<Form.Group controlId="email-9">
-						<Form.ControlLabel>Email</Form.ControlLabel>
-						<Form.Control name="email" type="email" />
-						<Form.HelpText>Required</Form.HelpText>
-					</Form.Group>
-					<Form.Group controlId="password-9">
-						<Form.ControlLabel>Password</Form.ControlLabel>
-						<Form.Control
-							name="password"
-							type="password"
-							autoComplete="off"
-						/>
-					</Form.Group>
-					<Form.Group controlId="textarea-9">
-						<Form.ControlLabel>Textarea</Form.ControlLabel>
-						<Form.Control
-							rows={5}
-							name="textarea"
-							accepter={Textarea}
-						/>
-					</Form.Group>
-					<Form.Group controlId="select-10">
-						<Form.ControlLabel>SelectPicker</Form.ControlLabel>
-						<Form.Control
-							name="select"
-							data={selectData}
-							accepter={SelectPicker}
-						/>
-					</Form.Group>
-				</Form>
+				
 			</Modal.Body>
 			<Modal.Footer>
 				<Button /* href="/" */ onClick={handler.close /* 다른 이벤트를 넣어도 됩니다. */} appearance="primary">

@@ -8,22 +8,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.boot.project.service.MMServiceImpl;
+import com.boot.project.service.BuyServiceImpl;
 
 @RestController // RestController는 리턴타입이 JSON
 @RequestMapping("/api")
 @CrossOrigin	// 추가  
-public class MMController {
+public class BuyController {
 	
 	@Autowired
-	private MMServiceImpl service;
+	private BuyServiceImpl service;
 	
-	// 구매 목록 GetMapping =>  http://localhost:8081/api/MMList
-	@GetMapping("/MMList")
+	// 구매 목록 GetMapping =>  http://localhost:8081/api/buyList
+	@GetMapping("/buyList")
 	public ResponseEntity<?> findAll() {
-		System.out.println("<<< purchaseList >>>");
+		System.out.println("<<< buyList >>>");
 		
-		return new ResponseEntity<>(service.purchaseList(), HttpStatus.OK);	//200
+		return new ResponseEntity<>(service.buyList(), HttpStatus.OK);	//200
 	}
 	
 }

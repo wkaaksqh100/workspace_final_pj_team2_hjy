@@ -1,13 +1,12 @@
 import { Button, ButtonToolbar, Container, DatePicker, IconButton, Input, InputGroup, InputPicker, Message, Modal, Uploader } from "rsuite";
 import SearchIcon from '@rsuite/icons/Search';
-import AddOutlineIcon from '@rsuite/icons/AddOutline';
-import InsertMMTbl from "./InsertMMTbl";
+//import AddOutlineIcon from '@rsuite/icons/AddOutline';
 import React, { useState } from "react";
-import SelectEmpMM from "./SelectEmpList";
 import './buy.css';
-import SearchPRMList from "./SearchPRMList";
-import SearchWHList from "./SearchWHList";
-import ModalForm, { _modalForm } from "../../components/ModalForm";
+import { _modalForm } from "../../components/ModalForm";
+import SearchStorage from "./SearchStorage";
+import BuyInsertTbl from "./BuyInsertTbl";
+
 
 const type = [
     '부가세율 적용',
@@ -26,10 +25,10 @@ const BuyInsert = () => {
     //     setIsModalOpen(false);
     // };
 
-    // 불러온 전표
-    const [open2, setOpen2] = React.useState(false);
-    const handleOpen2 = () => setOpen2(true);
-    const handleClose2 = () => setOpen2(false);
+    // // 불러온 전표
+    // const [open2, setOpen2] = React.useState(false);
+    // const handleOpen2 = () => setOpen2(true);
+    // const handleClose2 = () => setOpen2(false);
 
     // 불러온 전표
     const [open3, setOpen3] = React.useState(false);
@@ -63,15 +62,13 @@ const BuyInsert = () => {
                     </InputGroup.Addon>
                 </InputGroup>
 
-                <ModalForm />
-
                 <InputGroup className="input">
                     <InputGroup.Addon style={{ width: 80 }}>
                         거래처
                     </InputGroup.Addon>
                     <Input placeholder='거래처' />
                     <InputGroup.Addon>
-                        <SearchIcon onClick={handleOpen2} />
+                        <SearchIcon />
                     </InputGroup.Addon>
                 </InputGroup>
             </div>
@@ -94,21 +91,22 @@ const BuyInsert = () => {
                     </InputGroup.Addon>
                 </InputGroup>
 
-                <Uploader action="//jsonplaceholder.typicode.com/posts/">
+                 <Uploader action="//jsonplaceholder.typicode.com/posts/">
                     <Button style={{ width: 300, height: 40 }}>전표등록</Button>
-                </Uploader>
+                </Uploader> 
+
+            
                
             </div>
        
-
             <hr />
-            <InsertMMTbl />
+            <BuyInsertTbl />
 
             {/* 담당자 돋보기 버튼 클릭시 모달 상세 */}
       
 
             {/* 불러온전표 버튼 클릭시 모달 상세 */}
-            <Modal open={open2} onClose={handleClose2}>
+            {/* <Modal open={open2} onClose={handleClose2}>
                 <Modal.Header>
                     <Modal.Title>거래처검색</Modal.Title>
                 </Modal.Header>
@@ -126,7 +124,7 @@ const BuyInsert = () => {
                         닫기
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
             {/* 불러온전표 버튼 클릭시 모달 상세 */}
             <Modal open={open3} onClose={handleClose3}>
@@ -140,7 +138,7 @@ const BuyInsert = () => {
                             <SearchIcon />
                         </InputGroup.Button>
                     </InputGroup>
-                    <SearchWHList />
+                    <SearchStorage />
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={handleClose3} appearance="primary">

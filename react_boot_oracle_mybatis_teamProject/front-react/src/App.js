@@ -25,13 +25,11 @@ import basic_hr from "./resources/basic_hr.png"
 import basic_buyer from "./resources/basic_buyer.png"
 import basic_product from "./resources/basic_product.png"
 
-import buy_resume_input from "./resources/buy_resume_input.png"
-
 import finance_main from "./resources/finance_main.png"
 import finance_sales_resume from "./resources/finance_sales_resume.png"
 import BuyStatus from "./pages/buy/BuyStatus";
-import BuySearch from "./pages/buy/BuySearch";
-import BuyAdd from "./pages/buy/BuyAdd";
+import BuySelect from "./pages/buy/BuySelect";
+import BuyInsert from "./pages/buy/BuyInsert";
 
 
 
@@ -63,11 +61,11 @@ function App() {
 						// 구매
 						{
 							path: "buy_search/",
-							element: <BuySearch/>
+							element: <BuySelect/>
 						},
 						{
 							path: "buy_input/",
-							element: <BuyAdd/>
+							element: <BuyInsert/>
 						},
 						{
 							path: "buy_list/",
