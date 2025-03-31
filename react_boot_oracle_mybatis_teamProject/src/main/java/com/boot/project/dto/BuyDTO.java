@@ -23,14 +23,22 @@ public class BuyDTO {
 	
 	@Id
 	private int order_id;				// 주문번호
-	private Date order_date;			// 주문일자
-	private int emid;					// 사원번호
+	private Date order_date;			// 등록일자
 	private int client_code;			// 거래처번호
+	private String client_name;			// 거래처명
 	private int storage_code;			// 창고번호
+	private String storage_name;		// 창고명
 	private String transaction_type;	// 거래유형
 	private Date delivery_date;			// 납기일자	
-	private Date shipment_order_date;	// 출고일자	
 	private int order_code; 			// 발주번호
+	
+	// 주문 - 진행상태
+	private String order_status; 		// 주문상태
+	private String closing_staus ; 		// 종결여부
+	private String chit;				// 전표
+	private int approval_id;			// 승인여부 
+	
+	// 물품정보
 	private int item_code; 				// 물품번호
 	private String item_name; 			// 물품명
 	private String item_standard;		// 물품 규격
@@ -38,6 +46,7 @@ public class BuyDTO {
 	private int price; 					// 가격
 	private int supply; 				// 공급가
 	private int vat; 					// 부가세
-	private int total; 					// 총액
+	private int total; 					// 금액합계
+	
 	
 }

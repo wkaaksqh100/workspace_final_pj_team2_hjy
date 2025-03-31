@@ -7,7 +7,7 @@ const data = [
     { id: 1, date: "2025-03-20", CustomerName: "풀무원", ItemName: "콩나물", quantity: 100, TotalAmount: "100,000", TransactionType: "부가세율 적용", WarehouseName: "파주물류창고", account: "X", print: "인쇄", chit: "조회" },
 ];
 
-const StatusMMTbl = () => {
+const StatusTbl = () => {
 
     const styles = {
         //width: 960,
@@ -58,4 +58,4 @@ const StatusMMTbl = () => {
     );
 };
 
-export default StatusMMTbl;
+export default StatusTbl;

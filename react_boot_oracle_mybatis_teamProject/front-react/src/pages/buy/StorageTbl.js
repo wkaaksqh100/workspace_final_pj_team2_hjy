@@ -1,4 +1,4 @@
-import { Button, Modal, Table } from 'rsuite';
+import { Table } from 'rsuite';
 //import { mockUsers } from './mock';
 import React from 'react';
 
@@ -7,18 +7,13 @@ const data = [
     { division: '창고', WHCode: '000001', WHName: '1번창고'},
 ];
 
-const SearchStorage = () => {
+const StorageTbl = () => {
 
     const styles = {
         //width: 960,
         //marginBottom: 10,
         backgroundColor: '#f8f9fa',
     };
-
-     // 상세내역 > 내역 모달
-     const [open1, setOpen1] = React.useState(false);
-     const handleOpen1 = () => setOpen1(true);
-     const handleClose1 = () => setOpen1(false);
 
     return (
         <>
@@ -47,27 +42,8 @@ const SearchStorage = () => {
 
             </Table>
 
-            {/* 상세내역 > 내역 버튼 클릭시 모달 상세 */}
-            <Modal open={open1} onClose={handleClose1}>
-                <Modal.Header>
-                    <Modal.Title>거래처 내역</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={handleClose1} appearance="primary">
-                        저장
-                    </Button>
-                    <Button onClick={handleClose1} appearance="subtle">
-                        닫기
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-
-
         </>
     );
 };
 
-export default SearchStorage;
+export default StorageTbl;

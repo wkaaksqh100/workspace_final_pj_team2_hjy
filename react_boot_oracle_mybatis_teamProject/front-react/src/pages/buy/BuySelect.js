@@ -11,7 +11,7 @@ const BuySelect = () => {
         <>
         <Container>
 
-            <Message type="info" style={{ width: 960 }}>
+            <Message type="info" style={{ maxWidth: 1500 }}>
                 <strong>구매조회</strong>
             </Message>
             <br />
@@ -27,7 +27,7 @@ const BuySelect = () => {
             </div>
 
             {/* 전체 / 결재중 /미확인 / 확인 탭 */}
-            <Tabs defaultActiveKey="1" style={{ width: 960 }}>
+            <Tabs defaultActiveKey="1" style={{ maxWidth: 1500 }}>
                 <Tabs.Tab eventKey="1" title="전체">
                     <Container>
                         <BuySelectTbl />

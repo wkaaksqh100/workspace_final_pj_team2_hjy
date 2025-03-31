@@ -82,7 +82,7 @@ const BuyInsertTbl = (props) => {
 
     // 데이터 변경
     const handleChange = (id, key, value) => { // 특정행 id의 특정 key값을 변경할 때 사용
-      const nextData = [...data];  // bject.assign([], data) 새로운 배열을 생성
+      const nextData = [...item];  // bject.assign([], data) 새로운 배열을 생성
       const item = nextData.find(item => item.id === id);
       if (item) item[key] = value;
       setItem(nextData);

@@ -1,5 +1,7 @@
-import React from "react";
-import { Button, Form, Modal } from "rsuite";
+import React, { forwardRef } from "react";
+import { Button, Form, Input, Modal, SelectPicker } from "rsuite";
+import ClientTbl from "../pages/buy/ClientTbl";
+import ProductCodeTbl from "../pages/buy/ProductCodeTbl";
 
 // /* 선택상자 데이터 */
 // const selectData = ["Eugenia", "Bryan", "Linda", "Nancy", "Lloyd", "Alice"].map(
@@ -9,8 +11,12 @@ import { Button, Form, Modal } from "rsuite";
 // 	})
 // );
 
-const _modalForm = { // ModalForm's 이용중인 변수 : 멤버변수처럼 이용중
-	title: '담당자 검색',
+// const Textarea = forwardRef((props, ref) => (
+// 	<Input {...props} as="textarea" ref={ref} />
+// ));
+
+const _productCodeModalForm = { // ModalForm's 이용중인 변수 : 멤버변수처럼 이용중
+	title: '거래처 검색',
 	show: null, // useState[ state, stateSetter ] = show[0], show[1]
 	buttons: {
 		confirm: null,
@@ -27,9 +33,9 @@ const _modalForm = { // ModalForm's 이용중인 변수 : 멤버변수처럼 이
  * @param {*} confirm 확인 버튼 이름
  * @param {*} cancel 취소 버튼 이름
  */
-const ModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
+const ProductCodeModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 	/* 이렇게 연결지어야지만, ModalForm안에서만 쓰겠다고 연결을 짓습니다. */
-	const self = _modalForm; // this라는 이름을 쓸수 없어서, self로 지음.
+	const self = _productCodeModalForm; // this라는 이름을 쓸수 없어서, self로 지음.
 	/* 그래서, 왠만해서는 self.으로 변수를 다뤄주시는게 좋습니다. */
 
 	/* ModalForm의 멤버변수처럼 연결 : 매개변수 생성자처럼 */
@@ -71,7 +77,7 @@ const ModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				
+				<ProductCodeTbl />
 			</Modal.Body>
 			<Modal.Footer>
 				<Button /* href="/" */ onClick={handler.close /* 다른 이벤트를 넣어도 됩니다. */} appearance="primary">
@@ -81,17 +87,17 @@ const ModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 					{buttons.cancel}
 				</Button>
 			</Modal.Footer>
-		</Modal>
+		</Modal>	
 	);
 };
 
-ModalForm.defaultProps = {
+ProductCodeModalForm.defaultProps = {
 	// props가 설정이 안되어있으면, 기본(default)으로 들어갑니다.
-	title: "담당자 검색",
+	title: "거래처 검색",
 	confirm: "확인",
 	cancel: "취소",
 };
 
 // 이렇게 해놓으면, 다른곳에서 불러올수있습니다. ex) import { _modalForm } from "./../components/ModalForm"
-export { _modalForm /* ModalForm에서 사용중인 변수 */ }; // 주석처리하면, 다른곳에서 접근을 할수 없습니다.
-export default ModalForm;
+export { _productCodeModalForm /* ModalForm에서 사용중인 변수 */ }; // 주석처리하면, 다른곳에서 접근을 할수 없습니다.
+export default ProductCodeModalForm;

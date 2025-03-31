@@ -1,7 +1,7 @@
-import { Table, Button, Modal, Checkbox } from 'rsuite';
-import React, { useEffect, useState } from 'react';
+import { Table, Button, Checkbox } from 'rsuite';
+import React from 'react';
 import './buy.css';
-import ChitTbl from './ChitTbl';
+import { _chitModalForm } from '../../components/ChitModalForm';
 
 const { Column, HeaderCell, Cell } = Table;
 
@@ -20,119 +20,98 @@ const { Column, HeaderCell, Cell } = Table;
 
 const BuySelectTbl = () => {
 
-    const[buyList, setBuyList] =  useState([]); // 초기값을 모르므로 빈배열로 buyList에 대입
+    // const[buyList, setBuyList] =  useState([]); // 초기값을 모르므로 빈배열로 buyList에 대입
 
-    // fecth()를 통해 톰캣서버에세 데이터를 요청
-    useEffect(() => {
-        fetch("http://localhost:8081/api/buyList", {
-            method: "GET"
-        })
-        .then(res => res.json() // 응답이 오면 javascript object로 바꾸겠다.
-        )
-        .then(res => {
-            console.log(1, res); 
-            setBuyList(res); // 처음에는 비어있으므로 못가져온다. setBoardList(res);
-        }
-        )
-    }, []); // []은 디펜던시인데, setState()로 렌더링될때 실행되면 안되고, 1번만 실행하도록 빈배열을 넣어둔다.
-    // CORS 오류 : Controller 진입 직전에 적용된다. 외부에서 자바스크립트 요청이 오는 것을
+    // // fecth()를 통해 톰캣서버에세 데이터를 요청
+    // useEffect(() => {
+    //     fetch("http://localhost:8081/api/buyList", {
+    //         method: "GET"
+    //     })
+    //     .then(res => res.json() // 응답이 오면 javascript object로 바꾸겠다.
+    //     )
+    //     .then(res => {
+    //         console.log(1, res); 
+    //         setBuyList(res); // 처음에는 비어있으므로 못가져온다. setBoardList(res);
+    //     }
+    //     )
+    // }, []); // []은 디펜던시인데, setState()로 렌더링될때 실행되면 안되고, 1번만 실행하도록 빈배열을 넣어둔다.
+    // // CORS 오류 : Controller 진입 직전에 적용된다. 외부에서 자바스크립트 요청이 오는 것을
 
     const styles = {
         backgroundColor: '#f8f9fa',
     };
 
-    // 불러온 전표
-    const [open2, setOpen2] = React.useState(false);
-    const handleOpen2 = () => setOpen2(true);
-    const handleClose2 = () => setOpen2(false);
-
     return (
 
         <>
-            {buyList.map(buySearch => 
-            <buyItem key={buySearch.order_id} buySearch={buySearch}/>
-        )}
-            <Table virtualized height={500} data={buyList} style={{ width: 960 }}>
+            {/* {buyList.map(buySearch => ()
+                <buyItem key={buySearch.order_id} buySearch={buySearch}/>
+            )} */}
+            <Table virtualized height={500} style={{ maxWidth: 1500 }}>
 
                 <Column width={40} align="center" fixed >
                     <HeaderCell style={styles}></HeaderCell >
                     <Cell dataKey="id" >
                         <Checkbox />
                     </Cell>
-
                 </Column>
 
                 <Column width={100}>
                     <HeaderCell style={styles}>등록일자</HeaderCell>
-                    <Cell dataKey="date" />
+                    <Cell dataKey="order_date" />
                 </Column>
 
-                <Column width={80}>
+                <Column width={100}>
                     <HeaderCell style={styles}>주문번호</HeaderCell>
-                    <Cell dataKey="no" />
+                    <Cell dataKey="order_id" />
                 </Column>
 
-                <Column width={110}>
+                <Column width={100}>
                     <HeaderCell style={styles}>거래처명</HeaderCell>
-                    <Cell dataKey="CustomerName" />
+                    <Cell dataKey="client_name" />
                 </Column>
 
-                <Column width={110}>
+                <Column width={100}>
                     <HeaderCell style={styles}>품목명</HeaderCell>
-                    <Cell dataKey="ItemName" />
+                    <Cell dataKey="item_name" />
                 </Column>
 
                 <Column width={100}>
                     <HeaderCell style={styles}>금액합계</HeaderCell>
-                    <Cell dataKey="TotalAmount" />
+                    <Cell dataKey="total" />
                 </Column>
 
-                <Column width={120}>
+                <Column width={100}>
                     <HeaderCell style={styles}>거래유형</HeaderCell>
                     <Cell dataKey="transaction_type " />
                 </Column>
 
-                <Column width={120}>
+                <Column width={100}>
                     <HeaderCell style={styles}>입고창고</HeaderCell>
-                    <Cell dataKey="WarehouseName" />
+                    <Cell dataKey="storage_name" />
                 </Column>
 
                 <Column width={100}>
                     <HeaderCell style={styles}>회계반영 여부</HeaderCell>
-                    <Cell dataKey="account" />
+                    <Cell dataKey="closing_staus" />
                 </Column>
 
                 <Column width={100}>
                     <HeaderCell style={styles}>종결여부</HeaderCell>
-                    <Cell dataKey="account" />
+                    <Cell dataKey="order_status" />
                 </Column>
 
-                <Column width={80} fixed="right">
+                <Column width={100} fixed="right">
                     <HeaderCell style={styles}>불러온전표</HeaderCell>
                     <Cell style={{ padding: '6px' }}>
                         {rowData => (
-                            <Button color="blue" appearance='link' onClick={handleOpen2}>
+                            <Button color="blue" appearance='link' onClick={_chitModalForm.getHandle().open}>
                                 조회
                             </Button>
                         )}
                     </Cell>
                 </Column>
             </Table>       
-
-            {/* 불러온전표 버튼 클릭시 모달 상세 */}
-            <Modal open={open2} onClose={handleClose2}>
-                <Modal.Header>
-                    <Modal.Title>불러온전표</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <ChitTbl />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button onClick={handleClose2} appearance="subtle">
-                        닫기
-                    </Button>
-                </Modal.Footer>
-            </Modal>
 
         </>
     );

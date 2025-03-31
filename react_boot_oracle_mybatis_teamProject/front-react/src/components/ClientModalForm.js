@@ -1,20 +1,11 @@
-import React, { forwardRef } from "react";
-import { Button, Form, Input, Modal, SelectPicker } from "rsuite";
+import React, { useEffect, useState } from "react";
+import { Button, Checkbox, Modal, Table } from "rsuite";
+import { Cell, HeaderCell } from "rsuite-table";
+import Column from "rsuite/esm/Table/TableColumn";
 
-/* 선택상자 데이터 */
-const selectData = ["Eugenia", "Bryan", "Linda", "Nancy", "Lloyd", "Alice"].map(
-	(item) => ({ // 이렇게 하면, 둘다 같게 들어가서, 라벨따로 값따로 안넣어줘도 됩니다.
-		label: item, // Eugenia
-		value: item, // Eugenia
-	})
-);
-
-const Textarea = forwardRef((props, ref) => (
-	<Input {...props} as="textarea" ref={ref} />
-));
 
 const _clientModalForm = { // ModalForm's 이용중인 변수 : 멤버변수처럼 이용중
-	title: '거래처 검색',
+	title: null,
 	show: null, // useState[ state, stateSetter ] = show[0], show[1]
 	buttons: {
 		confirm: null,
@@ -32,6 +23,22 @@ const _clientModalForm = { // ModalForm's 이용중인 변수 : 멤버변수처�
  * @param {*} cancel 취소 버튼 이름
  */
 const ClientModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
+	const [clientList, setClientList] = useState([]); // 초기값을 모르므로 빈배열로 buyList에 대입
+
+	// fecth()를 통해 톰캣서버에세 데이터를 요청
+	useEffect(() => {
+		fetch("http://localhost:8081/api/clientList", {
+			method: "GET"
+		})
+			.then(res => res.json() // 응답이 오면 javascript object로 바꾸겠다.
+			)
+			.then(res => {
+				console.log(1, res);
+				setClientList(res); // 처음에는 비어있으므로 못가져온다. setBoardList(res);
+			}
+			)
+	}, []); // []은 디펜던시인데, setState()로 렌더링될때 실행되면 안되고, 1번만 실행하도록 빈배열을 넣어둔다.
+	// CORS 오류 : Controller 진입 직전에 적용된다. 외부에서 자바스크립트 요청이 오는 것을
 	/* 이렇게 연결지어야지만, ModalForm안에서만 쓰겠다고 연결을 짓습니다. */
 	const self = _clientModalForm; // this라는 이름을 쓸수 없어서, self로 지음.
 	/* 그래서, 왠만해서는 self.으로 변수를 다뤄주시는게 좋습니다. */
@@ -56,18 +63,15 @@ const ClientModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 
 	const handler = self.getHandle();
 
-	const [ formData, setFormData ] = React.useState({
-		name: "",
-		email: "",
-		password: "",
-		textarea: "",
-	});
-	self.getFormData = () => { return formData };
-
 	/*
 	 *	Hook영역 : useEffect(이걸 쓰는순간, 직접만든 훅이라고 React에서 말합니다.)
 	 */
 
+	const styles = {
+		//width: 960,
+		//marginBottom: 10,
+		backgroundColor: '#f8f9fa',
+	};
 
 	return (
 		<Modal open={self.show[0]} onClose={handler.close} size="xs">
@@ -75,42 +79,42 @@ const ClientModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 				<Modal.Title>{title}</Modal.Title>
 			</Modal.Header>
 			<Modal.Body>
-				<Form fluid onChange={setFormData} formValue={self.getFormData()}>
-					<Form.Group controlId="name-9">
-						<Form.ControlLabel>Username</Form.ControlLabel>
-						<Form.Control name="name" />
-						<Form.HelpText>Required</Form.HelpText>
-					</Form.Group>
-					<Form.Group controlId="email-9">
-						<Form.ControlLabel>Email</Form.ControlLabel>
-						<Form.Control name="email" type="email" />
-						<Form.HelpText>Required</Form.HelpText>
-					</Form.Group>
-					<Form.Group controlId="password-9">
-						<Form.ControlLabel>Password</Form.ControlLabel>
-						<Form.Control
-							name="password"
-							type="password"
-							autoComplete="off"
-						/>
-					</Form.Group>
-					<Form.Group controlId="textarea-9">
-						<Form.ControlLabel>Textarea</Form.ControlLabel>
-						<Form.Control
-							rows={5}
-							name="textarea"
-							accepter={Textarea}
-						/>
-					</Form.Group>
-					<Form.Group controlId="select-10">
-						<Form.ControlLabel>SelectPicker</Form.ControlLabel>
-						<Form.Control
-							name="select"
-							data={selectData}
-							accepter={SelectPicker}
-						/>
-					</Form.Group>
-				</Form>
+				<Table
+					height={500}
+					data={clientList}
+					onRowClick={rowData => {
+						console.log(rowData);
+					}}
+				>
+					<Column width={40} align="center" fixed >
+						<HeaderCell style={styles}></HeaderCell >
+						<Cell dataKey="id" >
+							<Checkbox />
+						</Cell>
+					</Column>
+
+					<Column width={200} align="center" fixed >
+						<HeaderCell style={styles}>거래처코드</HeaderCell >
+						<Cell>{(rowData) => rowData.client_code}</Cell>
+
+					</Column>
+
+					<Column width={200}>
+						<HeaderCell style={styles}>거래처명</HeaderCell>
+						<Cell>{(rowData) => rowData.client_name}</Cell>
+					</Column>
+
+					{/* <Column width={100}>
+						<HeaderCell style={styles}>상세내역</HeaderCell>
+						<Cell style={{ padding: '6px' }}>
+							{rowData => (
+								<Button color="yellow" appearance='link'>
+									내역
+								</Button>
+							)}
+						</Cell>
+					</Column> */}
+				</Table>
 			</Modal.Body>
 			<Modal.Footer>
 				<Button /* href="/" */ onClick={handler.close /* 다른 이벤트를 넣어도 됩니다. */} appearance="primary">
@@ -126,7 +130,7 @@ const ClientModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 
 ClientModalForm.defaultProps = {
 	// props가 설정이 안되어있으면, 기본(default)으로 들어갑니다.
-	title: "제목을 입력해주세요.",
+	title: "거래처 검색",
 	confirm: "확인",
 	cancel: "취소",
 };

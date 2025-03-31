@@ -1,5 +1,5 @@
 -- 1. database jaedb 생성
-create database buy character set utf8;
+create database jiyeondb character set utf8;
 -- alter database jaedb default character set utf8;
 
 -- 생성된 테이블 조회
@@ -12,22 +12,112 @@ use jiyeondb; -- use <db명>;
 DESCRIBE order_tbl;
 
 -- 인사-사원 테이블 생성
+drop table employee_tbl;
 create table employee_tbl(
-	emid INT(10) auto_increment primary KEY, 	-- 사원코드
+	em_id INT(10) auto_increment primary KEY, 		-- 사번
+	em_name VARCHAR(255) not NULL,					-- 담당자
+	department VARCHAR(255) not null,		-- (담당)부서
+	d_code VARCHAR(100)	
+);
+
+insert into employee_tbl (em_id, em_name, department, d_code)
+values( 100, '소지섭', '판매관리','PUR01');
+
+insert into employee_tbl (em_id, em_name, department, d_code)
+values( 101, '이동욱', '판매관리','PUR01');
+
+SELECT * FROM employee_tbl;
+
+-- 외래 키 제약 비활성화
+SET foreign_key_checks = 0;
+
+-- 테이블 삭제
+DROP TABLE employee_tbl;
+DROP TABLE department_tbl;
+
+-- 외래 키 제약 확인
+SHOW CREATE TABLE employee_tbl;
+
+-- 외래 키 제약 삭제
+ALTER TABLE employee_tbl
+DROP FOREIGN KEY employee_tbl_ibfk_1;
+
+-- 외래키에 CASCADE 추가 예시
+ALTER TABLE employee_tbl
+ADD CONSTRAINT fk_department_code
+FOREIGN KEY (d_code)
+REFERENCES department_tbl(d_code)
+ON DELETE CASCADE;
+
+-- 해당 부서에 속한 직원들을 먼저 삭제
+DELETE FROM employee_tbl WHERE d_code = <department_code>;
+
+-- 이제 부서 데이터를 안전하게 삭제할 수 있습니다
+DELETE FROM department_tbl WHERE department_code = <department_code>;
+
+SELECT TABLE_NAME, COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME 
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_NAME = 'employee_tbl' AND REFERENCED_TABLE_NAME IS NOT NULL;
+
+ALTER TABLE employee_tbl DROP FOREIGN KEY d_code;
+
+-- 컬럼명 변경
+ALTER TABLE employee_tbl 
+RENAME COLUMN incharge TO em_name;
+
+delete 
+from employee_tbl 
+where d_code='PUR10';
+
+select * 
+from department_tbl;
+
+-- 부서 테이블 생성
+drop table department_tbl;
+create table department_tbl(
+	d_code VARCHAR(100) primary KEY, 		-- 사번
+	department VARCHAR(255) unique not null,				-- (담당)부서
+	incharge VARCHAR(255) not NULL					-- 담당자
 );	
 
+insert into department_tbl (d_code, department, incharge)
+values('PUR10','판매관리','소지섭');
+
+insert into department_tbl (d_code, department, incharge)
+values('PUR10','판매관리','이동욱');
+
+delete 
+from department_tbl 
+where d_code='PUR10';
+
+delete   
+from dept_MM_tbl 
+where mm_partnerNo = 'J00798';
+
+SELECT * FROM department_tbl;
 
 -- 데이터 insert
 insert into employee_tbl (emid)
 values(1);
 
--- 물품 테이블 생성
-drop table item_tbl; 
-create table item_tbl(
+-- [물품 정보- 수량]​
+drop table order_item_tbl; 
+create table order_item_tbl(
+	order_id  INT(10), 	-- 물품코드
+	item_code  INT(10) not NULL,				-- 물품코드
+	item_name VARCHAR(255) not null,			-- 물품명
+	quantity INT(10) CHECK (quantity > 0),		-- 물품수량
+    FOREIGN KEY (order_id) REFERENCES order_tbl(order_id),
+    FOREIGN KEY (item_code) REFERENCES item_info_tbl(item_code)    
+);
+
+-- [물품 정보- 규격]
+drop table item_info_tbl; 
+create table item_info_tbl(
 	item_code INT(10) auto_increment primary KEY, 	-- 물품코드
-	item_name VARCHAR(255) not NULL,				-- 물품명
 	item_standard VARCHAR(255) not NULL			-- 규격
 );
+
 
 -- 데이터 insert
 insert into item_tbl (item_code, item_name, item_standard)
@@ -42,14 +132,17 @@ ADD order_id INT(10),
 ADD FOREIGN key (order_id) references order_tbl(order_id);
 
 -- 물품 금액 테이블 생성
-drop table item_price_tbl; 
-create table item_price_tbl(
-	item_code INT(10) auto_increment primary KEY, 	
-	quantity  INT(10) CHECK (quantity > 0),				
+drop table item_price_history_tbl​; 
+create table item_price_history_tbl​(
+	order_id INT(10), 
+	item_code INT(10), 				
 	price  DECIMAL(12,2),			
 	supply DECIMAL(12,2),
 	vat DECIMAL(12,2),
-	total DECIMAL(12,2)
+	total DECIMAL(12,2),
+	PRIMARY KEY (item_code, order_id),
+    FOREIGN KEY (item_code) REFERENCES item_info_tbl(item_code),
+    FOREIGN KEY (order_id) REFERENCES order_tbl(order_id)
 );
 
 SELECT * FROM item_price_tbl;
@@ -144,7 +237,6 @@ CREATE TABLE order_tbl(
 	FOREIGN KEY (emid) REFERENCES employee_tbl(emid),
 	FOREIGN KEY (client_code) REFERENCES client_tbl(client_code),
 	FOREIGN KEY (storage_code) REFERENCES warehouse_tbl(storage_code),
-	FOREIGN KEY (item_code) REFERENCES item_tbl(item_code)
 ); 
 
 CREATE TABLE order_detail_tbl(
@@ -169,8 +261,10 @@ CREATE TABLE order_tbl(
 	transaction_type 	VARCHAR(255) NOT NULL,  
 	delivery_date 		DATE, 			 				   	 
 	shipment_order_date DATE,     				  	 		
-	order_code 			INT(10),     			        	       			 			
-	item_code 			INT(10)
+	order_code 			INT(10),
+	FOREIGN KEY (emid) REFERENCES employee_tbl(emid),
+	FOREIGN KEY (client_code) REFERENCES client_tbl(client_code),
+	FOREIGN KEY (storage_code) REFERENCES warehouse_tbl(storage_code)
 ); 
 
 drop table order_tbl; 
@@ -209,12 +303,15 @@ SELECT * FROM order_tbl;
 -- 구매/판매 주문 테이블
 drop table order_detail_tbl; 
 
+-- [구매/판매 - 주문상세]
 CREATE TABLE order_detail_tbl(
-	order_id  			INT(10) AUTO_INCREMENT PRIMARY KEY,     
-	order_status        VARCHAR(255),
-	closing_staus       VARCHAR(255),
+	order_id  			INT(10),     
+	order_status        VARCHAR(20),
+	closing_staus       VARCHAR(20),
 	chit 				VARCHAR(255),
-	approval_id 		INT(10) 		
+	approval_id 		INT(10),
+	FOREIGN KEY (order_id) REFERENCES order_tbl(order_id),
+	FOREIGN KEY (approval_id) REFERENCES approval_tbl(approval_id)
 ); 
 
 -- 데이터 insert

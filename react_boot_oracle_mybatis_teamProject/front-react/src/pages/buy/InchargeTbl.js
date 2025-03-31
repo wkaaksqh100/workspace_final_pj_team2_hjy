@@ -1,8 +1,6 @@
 import { Table, Button, Modal, InputGroup, Input } from 'rsuite';
 //import { mockUsers } from './mock';
 import React from 'react';
-import ChitMM from './ChitMM';
-import SearchIcon from '@rsuite/icons/Search';
 
 const { Column, HeaderCell, Cell } = Table;
 const data = [
@@ -27,14 +25,14 @@ const InchargeTbl = () => {
                 }}
             >
                   
-                <Column width={280} align="center" fixed >
+                <Column width={200} align="center" fixed >
                     <HeaderCell style={styles}>사원코드</HeaderCell >
                     <Cell dataKey="employeeCode" >
                     
                     </Cell>
                 </Column>
 
-                <Column width={280}>
+                <Column width={200}>
                     <HeaderCell style={styles}>사원명</HeaderCell>
                     <Cell dataKey="EmployeeName" />
                 </Column>

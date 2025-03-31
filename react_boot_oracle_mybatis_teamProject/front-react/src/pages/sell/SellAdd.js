@@ -122,9 +122,11 @@ const SellAdd = () => {
 							<Form.Control name="surtax" type="text" autoComplete="off" style={{ width: 305, marginRight: 70 }} />
 						</HStack>
 					</Form.Group>
+					</div>
 
+					<div>
 					<style>{t_styles}</style>
-
+					
 						<Button style={{ width: 390 }} 
 						onClick={() => {
 							setData([
@@ -134,7 +136,8 @@ const SellAdd = () => {
 						}}
 						>
 						입력 추가하기
-						</Button></div>
+						</Button>
+					</div>	
 						<hr />
 
 						{/* 입력 하위 칸 */}

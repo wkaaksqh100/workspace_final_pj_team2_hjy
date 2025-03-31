@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.boot.project.dao.BuyMapper">
+<mapper namespace="com.boot.project.dao.SearchMapper">
+<!-- 	
 	 <select id="buyList" resultType="com.boot.project.dto.BuyDTO">
 	      select * 
 			from order_tbl
 			join order_detail_tbl 
 			on order_tbl.order_id = order_detail_tbl.order_id
   	 </select>
+	  -->
+	 <select id="inchargeList" resultType="com.boot.project.dto.InchargeDTO">
+	      select * from employee_tbl
+  	 </select>
 	
-	<!--  <insert id="insertBoard" parameterType="com.boot.reactMapper.dto.BoardDTO">
-	      INSERT INTO mvc_board_tbl(b_num, b_title, b_content, b_writer, b_password)
- 			VALUES((SELECT NVL(MAX(b_num) + 1, 1)FROM mvc_board_tbl), #{b_title}, #{b_content}, #{b_writer}, #{b_password})   
-  	 </insert>
+	 <select id="clientList" resultType="com.boot.project.dto.ClientDTO">
+	      select * from client_tbl
+  	 </select>
+  	 
+  	 <insert id="insertItem" parameterType="com.boot.project.dto.ItemDTO">
+	      INSERT INTO item_price_history_tbl​(order_id, item_code, price, supply, vat, total)
+ 			VALUES((SELECT NVL(MAX(order_id) + 1, 1)FROM item_price_history_tbl), #{item_code}, #{supply}, #{vat}, #{total})   
+  	</insert>
+	
+	<!-- 
 
 	 <update id="updateBoard" parameterType="com.boot.reactMapper.dto.BoardDTO">
 	       UPDATE mvc_board_tbl

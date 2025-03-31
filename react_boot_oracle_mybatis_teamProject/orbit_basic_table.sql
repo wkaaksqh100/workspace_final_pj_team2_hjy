@@ -22,7 +22,8 @@ drop table warehouse_tbl;
 
 -- 창고테이블 생성
 create table warehouse_tbl(
-	storage_code INT(10) primary KEY					-- 창고명
+	storage_code INT(10) primary key,					-- 창고코드
+	storage VARCHAR(255) not null						-- 창고명
 );
 
 -- 데이터 insert
@@ -61,8 +62,19 @@ drop table employee_tbl;
 -- 테이블 생성
 create table employee_tbl(
 	emid INT(10) auto_increment primary KEY, 		-- 사번
-	incharge VARCHAR(255) not NULL,					-- 담당자
-	department VARCHAR(255) unique not NULL				-- (담당)부서
+	em_name VARCHAR(255) not NULL,					-- 담당자
+	department VARCHAR(255) unique not null,		-- (담당)부서
+	d_code VARCHAR(100),
+	FOREIGN KEY (d_code) REFERENCES department_tbl(d_code)
+);
+
+ALTER TABLE employee_tbl 
+RENAME COLUMN incharge TO em_name;
+
+create table department_tbl(
+	d_code VARCHAR(100) primary KEY, 		-- 사번
+	department VARCHAR(255) unique not null,				-- (담당)부서
+	incharge VARCHAR(255) not NULL					-- 담당자
 );
 
 -- 데이터 insert
@@ -89,12 +101,36 @@ drop table client_tbl;
 
 -- 테이블 생성
 create table client_tbl(
-	client_code INT(10) primary KEY				-- 거래처
+	client_code INT(10) auto_increment primary key,	-- 거래처
+	client_name VARCHAR(255) not NULL		-- 거래처
 );
 
+-- 외래키에 CASCADE 추가 예시
+ALTER TABLE employee_tbl
+ADD CONSTRAINT fk_department_code
+FOREIGN KEY (d_code)
+REFERENCES department_tbl(d_code)
+ON DELETE CASCADE;
+
+-- 외래 키 제약 확인
+SHOW CREATE TABLE client_tbl;
+
+-- 외래 키 제약 삭제 (예시: 외래 키 이름이 fk_client_code)
+ALTER TABLE client_tbl
+DROP FOREIGN KEY fk_client_code;
+
+alter table client_tbl 
+modify column client_code VARCHAR(255);
+
 -- 데이터 insert
-INSERT INTO client_tbl (client_name)
-VALUES ('LG 전자');
+INSERT INTO client_tbl (client_code, client_name)
+VALUES (1, '삼성');
+
+INSERT INTO client_tbl (client_code, client_name)
+VALUES (2, 'LG');
+
+INSERT INTO client_tbl (client_code, client_name)
+VALUES (3, '애플');
 
 -- 테이블 조회
 select * from client_tbl;
