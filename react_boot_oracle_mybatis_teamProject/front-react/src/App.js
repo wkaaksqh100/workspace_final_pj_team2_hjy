@@ -3,7 +3,7 @@ import "rsuite/dist/rsuite.min.css";
 
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 
-import AppConfig from "./config/AppConfig";
+//import AppConfig from "./config/AppConfig";
 
 import WhenEnter from "./pages/WhenEnter";
 import Main from './pages/Main';
@@ -30,6 +30,7 @@ import finance_sales_resume from "./resources/finance_sales_resume.png"
 import BuyStatus from "./pages/buy/BuyStatus";
 import BuySelect from "./pages/buy/BuySelect";
 import BuyInsert from "./pages/buy/BuyInsert";
+import BuyInsertOrderItem from "./pages/buy/InsertOrderItem";
 
 
 
@@ -66,6 +67,10 @@ function App() {
 						{
 							path: "buy_input/",
 							element: <BuyInsert/>
+						},
+						{
+							path: "buy_input/",
+							element: <BuyInsertOrderItem/>
 						},
 						{
 							path: "buy_list/",

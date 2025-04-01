@@ -49,7 +49,7 @@ const InchargeModalForm = ({ title, confirm, cancel, onInchargeSelect, handleOpe
                         <Cell>
                             {(rowData) => (
                                 <Checkbox
-                                checked={selectedIncharge?.em_id === rowData.em_id} 
+                                checked={selectedIncharge?.emid === rowData.emid} 
                                 onChange={(_, checked) => handleCheckboxChange(checked, rowData)}
                             >
                                 {/* {rowData.em_name} */}
@@ -59,7 +59,7 @@ const InchargeModalForm = ({ title, confirm, cancel, onInchargeSelect, handleOpe
                     </Column>
                     <Column width={200} align="center" fixed>
                         <HeaderCell style={styles}>사원코드</HeaderCell>
-                        <Cell>{(rowData) => rowData.em_id}</Cell>
+                        <Cell>{(rowData) => rowData.emid}</Cell>
                     </Column>
                     <Column width={200}>
                         <HeaderCell style={styles}>사원명</HeaderCell>

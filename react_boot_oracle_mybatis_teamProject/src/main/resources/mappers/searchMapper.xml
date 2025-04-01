@@ -13,17 +13,14 @@
   	 </select>
 	  -->
 	 <select id="inchargeList" resultType="com.boot.project.dto.InchargeDTO">
-	      select * from employee_tbl
+	      select emid
+	      	   , em_name 
+	      from employee_tbl_hjy
   	 </select>
 	
 	 <select id="clientList" resultType="com.boot.project.dto.ClientDTO">
-	      select * from client_tbl
+	      select * from client_tbl_hjy
   	 </select>
-  	 
-  	 <insert id="insertItem" parameterType="com.boot.project.dto.ItemDTO">
-	      INSERT INTO item_price_history_tbl​(order_id, item_code, price, supply, vat, total)
- 			VALUES((SELECT NVL(MAX(order_id) + 1, 1)FROM item_price_history_tbl), #{item_code}, #{supply}, #{vat}, #{total})   
-  	</insert>
 	
 	<!-- 
 

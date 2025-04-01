@@ -20,7 +20,7 @@ public class InchargeDTO {
 	
 	@Id
 	// 담당자 
-	private String em_id;			// 사원번호
+	private String emid;			// 사원번호
 	private String em_name;			// 담당자
 	
 }

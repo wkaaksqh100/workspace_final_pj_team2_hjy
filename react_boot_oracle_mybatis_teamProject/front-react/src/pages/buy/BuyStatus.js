@@ -56,7 +56,7 @@ const BuyStatus = () => {
                         value={selectedIncharge ? selectedIncharge.em_name : ""}
                     />
                     <InputGroup.Addon>
-                        <SearchIcon onClick={handleOpenInchargeModal} />
+                        <SearchIcon />
                     </InputGroup.Addon>
                 </InputGroup>
 
@@ -66,7 +66,7 @@ const BuyStatus = () => {
                         </InputGroup.Addon>
                         <Input placeholder='거래처' />
                         <InputGroup.Addon>
-                            <SearchIcon onClick={_clientModalForm.getHandle().open} />
+                            <SearchIcon />
                         </InputGroup.Addon>
                     </InputGroup>
                 </div>

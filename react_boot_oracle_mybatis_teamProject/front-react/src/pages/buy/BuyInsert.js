@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button, Container, DatePicker, Input, InputGroup, InputPicker, Message, Uploader } from "rsuite";
 import SearchIcon from '@rsuite/icons/Search';
 import './buy.css';
-import BuyInsertTbl from "./BuyInsertTblBefore";
 import InchargeModalForm from "../../components/InchargeModalForm";
 import { _storageModalForm } from "../../components/StorageModalForm";
 import { _clientModalForm } from "../../components/ClientModalForm";
+import ItemOrderList from "./ItemOrderList";
+import InsertOrderItem from "./InsertOrderItem";
 
 const type = [
     '부가세율 적용',
@@ -31,7 +32,7 @@ const BuyInsert = () => {
                 <strong>구매입력</strong>
             </Message>
             <br />
-            <div className="inputBox">
+            <div className="inputBox" >
                 <InputGroup className="input">
                     <InputGroup.Addon style={{ width: 80 }}>
                         일자
@@ -76,9 +77,10 @@ const BuyInsert = () => {
                         <SearchIcon onClick={_storageModalForm.getHandle().open} />
                     </InputGroup.Addon>
                 </InputGroup>
+                
                 <Uploader action="//jsonplaceholder.typicode.com/posts/">
                     <Button style={{ width: 300, height: 40 }}>전표등록</Button>
-                </Uploader>
+                </Uploader>    
             </div>
             
             <InchargeModalForm
@@ -90,7 +92,11 @@ const BuyInsert = () => {
                 handleColse={() => setInchargeModalOpen(false)}
             />
             <hr />
-            <BuyInsertTbl />
+
+            <InsertOrderItem />
+
+            <hr />
+            <ItemOrderList />
             
         </Container>
     );

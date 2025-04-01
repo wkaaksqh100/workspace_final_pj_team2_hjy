@@ -69,7 +69,7 @@ const BuyInsertTbl = (props) => {
       .then((res) => {    // catch는 여기서 오류가 발생해야 실행됨
         console.log("등록 성공", res);
         if (res !== null) {
-          navigate('/buyList')  // old버전 : props.history.push('/boardList');
+          navigate('/itemOrderList')  // old버전 : props.history.push('/boardList');
         } else {
           alert("주문 작성에 실패하였습니다.");
 
