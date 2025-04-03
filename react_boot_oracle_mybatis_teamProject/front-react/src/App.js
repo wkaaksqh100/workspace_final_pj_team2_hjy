@@ -1,5 +1,8 @@
 /* eslint-disable react/react-in-jsx-scope */
 import "rsuite/dist/rsuite.min.css";
+// index.tsx 또는 App.tsx
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from "react";
 
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 
@@ -32,7 +35,15 @@ import BuySelect from "./pages/buy/BuySelect";
 import BuyInsert from "./pages/buy/BuyInsert";
 import BuyInsertOrderItem from "./pages/buy/InsertOrderItem";
 
+// 구매관리 rsuite Table에서 React Query 사용하기 위해 추가
+const queryClient = new QueryClient();
 
+<React.StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <App />
+  </QueryClientProvider>
+</React.StrictMode>
+// 여기까지
 
 function App() {
 

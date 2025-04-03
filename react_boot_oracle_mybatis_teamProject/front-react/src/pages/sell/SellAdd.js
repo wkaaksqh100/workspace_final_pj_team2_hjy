@@ -1,13 +1,14 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button, ButtonToolbar, Message, DatePicker, Form, 
 		 InputGroup, AutoComplete, HStack, Input, Table, 
-		 IconButton, InputNumber} from "rsuite";
+		 IconButton, InputNumber, SelectPicker } from "rsuite";
 import { VscEdit, VscSave, VscRemove } from 'react-icons/vsc';
 import { mockUsers } from '../../resource/sell_mock4';
 import SearchIcon from '@rsuite/icons/Search';
 import "../../resource/Sell_maintitle.css";
-import { _modalForm } from "../../components/ModalForm";
+import ClientSearchModal from "../../components/ClientSearchModal";
+import EmployeeSearchModal from "../../components/EmployeeSearchModal";
 
 const styles = {
 	width: 150,
@@ -17,20 +18,44 @@ const styles = {
 const { Column, HeaderCell, Cell } = Table;
 const defaultData = mockUsers(8);
 
-
-const t_styles = `
-  .table-cell-editing .rs-table-cell-content {
-	padding: 4px;
-  }
-  .table-cell-editing .rs-input {
-	width: 100%;
-  }
-  `;
-
+/* 거래유형 - 선택 데이터 */
+const sellType = ["부과세율 적용", "부가세율 미적용"].map(
+	(item) => ({ // 이렇게 하면, 둘다 같게 들어가서, 라벨따로 값따로 안넣어줘도 됩니다.
+		label: item, // Eugenia
+		value: item, // Eugenia
+	})
+);
 
 const SellAdd = () => {
+	// 거래처 모달 관리
+	const [selectedClient, setSelectedClient] = useState(null);
+	const [selectedClientName, setSelectedClientName] = useState(null);
+	const [isClientModalOpen, setClientModalOpen] = useState(false);
 
+	const handleClientSelect = (client_code, client_name) => {
+        setSelectedClient(client_code);
+		setSelectedClientName(client_name);
+        setClientModalOpen(false);
+    };
 
+    const handleOpenClientModal = () => {
+        setClientModalOpen(true);
+    };
+
+	// 담당자 모달 관리
+	const [selectedIncharge, setSelectedIncharge] = useState(null);
+	const [selectedInchargeName, setSelectedInchargeName] = useState(null);
+	const [isInchargeModalOpen, setInchargeModalOpen] = useState(false);
+
+	const handleInchargeSelect = (emid, incharge) => {
+        setSelectedIncharge(emid);
+		setSelectedInchargeName(incharge);
+        setClientModalOpen(false);
+    };
+
+    const handleOpenInchargeModal = () => {
+        setInchargeModalOpen(true);
+    };
 
 
 	const [data, setData] = React.useState(defaultData);
@@ -53,8 +78,6 @@ const SellAdd = () => {
 		setData(data.filter(item => item.id !== id));
 	};
 
-	
-
 	return (
 		<div>
 			
@@ -70,7 +93,7 @@ const SellAdd = () => {
 
 				<div className="form_div">
 					<Form.Group controlId="day">
-						<Form.ControlLabel style={{ marginRight: 55, fontSize: 17 }}>출하지시일</Form.ControlLabel>
+						<Form.ControlLabel style={{ marginRight: 9, fontSize: 17 }}>출하지시일</Form.ControlLabel>
 						<DatePicker style={{ width: 310, marginRight: 70 }} />
 					</Form.Group>
 
@@ -78,13 +101,18 @@ const SellAdd = () => {
 						<HStack>
 							<Form.ControlLabel style={{ marginRight: 30, fontSize: 17 }}>거래처</Form.ControlLabel>
 							<InputGroup style={styles}>
+							<Input
+								placeholder='거래처'
+								value={selectedClient || ""} readOnly
+							/>
 								<AutoComplete />
-									<InputGroup.Button tabIndex={-1} onClick={_modalForm}>
-									
-										<SearchIcon />
+									<InputGroup.Button tabIndex={-1} >
+										{/* 모달 열기 버튼 */}
+										<SearchIcon onClick={handleOpenClientModal} />
 									</InputGroup.Button>
 							</InputGroup>
-							<Form.Control name="customer_1" type="text" autoComplete="off" style={{ width: 150,  marginBottom: 5 }} />
+							<Input name="customer_1" type="text" autoComplete="off" style={{ width: 150,  marginBottom: 5 }}
+								value={selectedClientName || ""} readOnly />
 						</HStack>
 					</Form.Group>
 					</div>
@@ -93,12 +121,19 @@ const SellAdd = () => {
 						<HStack>
 							<Form.ControlLabel style={{ marginRight: 34, fontSize: 17 }}>담당자</Form.ControlLabel>
 							<InputGroup style={styles}>
+							<Input
+								placeholder='담당자'
+								value={selectedIncharge || ""} readOnly
+							/>
 								<AutoComplete />
-									<InputGroup.Button tabIndex={-1} onClick={_modalForm.getHandle().open}>
-										<SearchIcon />
+									<InputGroup.Button tabIndex={-1}>
+										{/* 모달 열기 버튼 */}
+										<SearchIcon onClick={handleOpenInchargeModal}/>
 									</InputGroup.Button>
 							</InputGroup>
-							<Form.Control name="customer_2" type="text" autoComplete="off" style={{ width: 150, marginBottom: 5, marginRight: 70 }} />
+							{/* <Form.Control name="customer_2" type="text" autoComplete="off" style={{ width: 150, marginBottom: 5, marginRight: 70 }} /> */}
+							<Input name="customer_1" type="text" autoComplete="off" style={{ width: 150,  marginBottom: 5 }}
+								value={selectedInchargeName || ""} readOnly />
 						</HStack>
 					</Form.Group>
 					
@@ -107,7 +142,7 @@ const SellAdd = () => {
 							<Form.ControlLabel style={{ marginRight: 15, fontSize: 17 }}>출하창고</Form.ControlLabel>
 							<InputGroup style={styles}>
 								<AutoComplete />
-									<InputGroup.Button tabIndex={-1}>
+									<InputGroup.Button tabIndex={-1} >
 										<SearchIcon />
 									</InputGroup.Button>
 							</InputGroup>
@@ -119,15 +154,18 @@ const SellAdd = () => {
 					<Form.Group controlId="surtax">
 						<HStack>
 							<Form.ControlLabel style={{ marginRight: 20, fontSize: 17 }}>거래유형</Form.ControlLabel>
-							<Form.Control name="surtax" type="text" autoComplete="off" style={{ width: 305, marginRight: 70 }} />
+							{/* <Form.Control name="surtax" type="text" autoComplete="off" style={{ width: 305, marginRight: 70 }} /> */}
+							<Form.Control style={{width: 305}}
+							name="sellType"
+							data={sellType}
+							accepter={SelectPicker}
+							/>
 						</HStack>
-					</Form.Group>
-					</div>
-
-					<div>
-					<style>{t_styles}</style>
+					</Form.Group></div>
+					<div className="addPlus">
+					{/* <style>{t_styles}</style> */}
 					
-						<Button style={{ width: 390 }} 
+						<Button style={{ width: 850 }} 
 						onClick={() => {
 							setData([
 							{ id: data.length + 1, name: '', age: 0, birthdate: null, status: 'EDIT' },
@@ -136,8 +174,7 @@ const SellAdd = () => {
 						}}
 						>
 						입력 추가하기
-						</Button>
-					</div>	
+						</Button></div>
 						<hr />
 
 						{/* 입력 하위 칸 */}
@@ -229,6 +266,24 @@ const SellAdd = () => {
 						</div>
 					</ButtonToolbar>
 					<hr></hr>
+				
+				<ClientSearchModal
+					title="거래처 선택"
+					confirm="확인"
+					cancel="취소"
+					onClientSelect={handleClientSelect}	// client_code, client_name 받기
+					handleOpen={isClientModalOpen}
+					handleColse={() => setClientModalOpen(false)}
+				/>
+
+				<EmployeeSearchModal
+					title="담당자 선택"
+					confirm="확인"
+					cancel="취소"
+					onInchargeSelect={handleInchargeSelect}	// emid, Incharge 받기
+					handleOpen={isInchargeModalOpen}
+					handleColse={() => setInchargeModalOpen(false)}
+				/>
 
 				</Form>
 			</div>
@@ -298,5 +353,6 @@ function toValueString(value, dataType) {
 	  </Cell>
 	);
   };
+
 
 export default SellAdd;

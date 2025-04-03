@@ -8,7 +8,7 @@ const InchargeModalForm = ({ title, confirm, cancel, onInchargeSelect, handleOpe
     const [selectedIncharge, setSelectedIncharge] = useState(null);
 
     useEffect(() => {
-        fetch("http://localhost:8081/api/inchargeList", {
+        fetch("http://localhost:8081/buyOrder/findByIncharge", {
             method: "GET"
         })
             .then(res => res.json())

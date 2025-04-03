@@ -51,7 +51,7 @@ const BuyInsertTbl = (props) => {
   // 2. 실제로 받았다면 save가 제대로 되었는지 확인
   const submitItem = (e) => {
     e.preventDefault();     // submit이 action을 안타고 자기 할일을 그만한다.
-    fetch("http://localhost:8081/api/insertItem", {  // 스프링부트
+    fetch("http://localhost:8081/main/insertItem", {  // 스프링부트
       method: "POST",
       headers: {
         "content-Type": "application/json;charset=utf-8"
@@ -82,7 +82,7 @@ const BuyInsertTbl = (props) => {
 
     // 데이터 변경
     const handleChange = (id, key, value) => { // 특정행 id의 특정 key값을 변경할 때 사용
-      const nextData = [...data];  // bject.assign([], data) 새로운 배열을 생성
+      const nextData = [...item];  // bject.assign([], data) 새로운 배열을 생성
       const item = nextData.find(item => item.id === id);
       if (item) item[key] = value;
       setItem(nextData);

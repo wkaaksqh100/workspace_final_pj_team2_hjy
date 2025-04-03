@@ -27,7 +27,7 @@ const ClientModalForm = ({ title, confirm, cancel } /* = props:속성 */) => {
 
 	// fecth()를 통해 톰캣서버에세 데이터를 요청
 	useEffect(() => {
-		fetch("http://localhost:8081/api/clientList", {
+		fetch("http://localhost:8081/main/findByClient", {
 			method: "GET"
 		})
 			.then(res => res.json() // 응답이 오면 javascript object로 바꾸겠다.

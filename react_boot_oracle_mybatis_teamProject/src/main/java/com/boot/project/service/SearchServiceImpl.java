@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.boot.project.dao.BuyMapper;
 import com.boot.project.dao.SearchMapper;
-import com.boot.project.dto.BuyDTO;
 import com.boot.project.dto.ClientDTO;
 import com.boot.project.dto.InchargeDTO;
 
@@ -20,15 +18,15 @@ public class SearchServiceImpl {
 	
 	// 담당자 목록
 	@Transactional(readOnly=true)
-	public List<InchargeDTO> inchargeList(){
+	public List<InchargeDTO> findByIncharge(){
 		
-		return SearchMapper.inchargeList();
+		return SearchMapper.findByIncharge();
 	}
 
 	// 거래처 목록
 	@Transactional(readOnly=true)
-	public List<ClientDTO> clientList(){
+	public List<ClientDTO> findByClient(){
 		
-		return SearchMapper.clientList();
+		return SearchMapper.findByClient();
 	}
 }

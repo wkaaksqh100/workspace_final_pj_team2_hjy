@@ -12,13 +12,14 @@
 			on order_tbl.order_id = order_detail_tbl.order_id
   	 </select>
 	  -->
-	 <select id="inchargeList" resultType="com.boot.project.dto.InchargeDTO">
+	 <select id="findByIncharge" resultType="com.boot.project.dto.InchargeDTO">
 	      select emid
 	      	   , em_name 
+	      	   , department
 	      from employee_tbl_hjy
   	 </select>
 	
-	 <select id="clientList" resultType="com.boot.project.dto.ClientDTO">
+	 <select id="findByClient" resultType="com.boot.project.dto.ClientDTO">
 	      select * from client_tbl_hjy
   	 </select>
 	

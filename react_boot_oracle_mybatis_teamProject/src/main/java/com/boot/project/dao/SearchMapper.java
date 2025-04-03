@@ -12,8 +12,8 @@ import com.boot.project.dto.InchargeDTO;
 @Repository
 public interface SearchMapper {
 	
-	public List<InchargeDTO> inchargeList();	// 사원 목록
+	public List<InchargeDTO> findByIncharge();	// 사원 목록
 
-	public List<ClientDTO> clientList();	// 거래처 목록
+	public List<ClientDTO> findByClient();	// 거래처 목록
 	
 }

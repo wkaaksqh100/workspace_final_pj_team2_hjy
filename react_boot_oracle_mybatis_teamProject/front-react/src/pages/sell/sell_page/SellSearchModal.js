@@ -1,6 +1,5 @@
 
 import React from "react";
-import searchIMG from '../../../resource/sell_image/물품 검색.png'
 import { Button, Form, InputGroup, AutoComplete, HStack } from "rsuite";
 import SearchIcon from '@rsuite/icons/Search';
 import "../../../resource/Sell_maintitle.css";
@@ -10,11 +9,9 @@ const styles = {
 	marginBottom: 5
   };
 
-
 const SellSearchModal = () => {
 
     return(
-
 		
         <div>
             {/* 판매 물품 검색창 */}

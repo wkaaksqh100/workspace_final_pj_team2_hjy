@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.project.dao.BuyOrderMapper">
+
+	<select id="buyOrderList" resultType="com.boot.project.dto.BuyOrderDTO">
+	      SELECT * FROM buy_order_view
+  	</select>
+
+	<!-- 1. 주문 등록  -->
+    <insert id="saveBuyOrder" useGeneratedKeys="true" keyProperty="order_id">
+        INSERT INTO order_tbl (order_date, emid, client_code, storage_code)
+        VALUES (#{orderDate}, #{emid}, #{clientCode}, #{storageCode})
+    </insert>
+
+    <!-- 2. 마지막 order_id 조회 -->
+    <select id="getLastInsertedOrderId" resultType="int">
+        SELECT LAST_INSERT_ID()
+    </select>
+
+   <!--  3. 주문 상세 등록 -->
+    <insert id="saveOrderItem">
+        INSERT INTO order_item_tbl (
+            order_id, item_code, item_name, quantity, price, supply, vat, total
+        ) VALUES (
+            #{orderId},
+            #{item.itemCode},
+            #{item.itemName},
+            #{item.quantity},
+            #{item.price},
+            #{item.supply},
+            #{item.vat},
+            #{item.total}
+        )
+    </insert>
+
+
+	
+  	 <!-- <insert id="insertItem" parameterType="com.boot.project.dto.ItemDTO">
+	    INSERT INTO order_item_tbl_hjy (order_id, item_code, item_name, quantity)
+	    VALUES (#{order_id}, #{item_code}, #{item_name}, #{quantity})
+	 </insert>
+  	 
+  	 <delete id="deleteOrder" parameterType="int">
+	       DELETE FROM order_item_tbl_hjy
+ 		    WHERE order_id = #{order_id} 
+  	 </delete>
+	 -->
+</mapper>   

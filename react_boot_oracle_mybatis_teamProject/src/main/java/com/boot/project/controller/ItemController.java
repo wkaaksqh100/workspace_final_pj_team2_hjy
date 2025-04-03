@@ -26,10 +26,10 @@ public class ItemController {
 	
 	// 구매물품 목록 GetMapping => http://localhost:8081/api/orderList
 	@GetMapping("/orderList")
-	public ResponseEntity<?> findAll() {	// ?를 주면 자동으로 적용된다. T 와 같은 의미, 데이터가 아직 결정되지 않았다는 뜻 => Integer 또는 ? 를 주면 된다. 
+	public ResponseEntity<?> findAll() {	 
 		System.out.println("<<< orederList >>>");
 		
-		return new ResponseEntity<>(service.orderList(), HttpStatus.CREATED); // 201 // <>를 주면 위에 있는 <Integer>안에 있는게 그대로 적용된다.
+		return new ResponseEntity<>(service.orderList(), HttpStatus.OK); //200
 	}
 	
 	// 구매물품 등록 PostMapping => http://localhost:8081/api/orderItem

@@ -18,7 +18,7 @@ const BuyInsertTbl = () => {
 
   const submitItem = (e) => {
     e.preventDefault();
-    fetch("http://localhost:8081/api/insertItem", {
+    fetch("http://localhost:8081/main/insertItem", {
       method: "POST",
       headers: { "content-Type": "application/json;charset=utf-8" },
       body: JSON.stringify(data)
